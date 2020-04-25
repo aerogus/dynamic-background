@@ -1,61 +1,65 @@
-document.addEventListener("keydown", function(e) {
-  if (e.keyCode == 13) {
-    toggleFullScreen();
-  }
-}, false);
+/**
+ * Background dynamique
+ */
 
-function toggleFullScreen() {
-  if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-  } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen(); 
-    }
-  }
-}
+// 4 couleurs, codé en RGV décimal
+const colors = new Array(
+  [248, 244, 186],
+  [ 37,  48,  65],
+  [248, 244, 186],
+  [ 37,  48,  65]
+);/*
+  [199, 232, 193],
+  [243, 245, 235]
+);*/
 
-// fetestival
-var colors = new Array(
-  [240, 223, 92],
-  [247, 153, 95],
-  [243, 133, 57],
-  [159,  80, 25]
+const alpha = .5;
+
+/*
+  [208, 234, 205],
+  [251, 249, 204],
+  [209, 238, 234],
+  [246, 218, 204]
 );
+*/
 
-var step = 0;
+// nombre d'images par seconde voulu
+const frameRate = 60;
+// intervalle entre chaque calcul
+const refresh = 1000 / frameRate;
+
 // color table indices for: 
-// current color left
-// next color left
-// current color right
-// next color right
-var colorIndices = [0, 1, 2, 3];
+const colorIndices = [
+  0, // current color left
+  1, // next color left
+  2, // current color right
+  3  // next color right
+];
 
 // transition speed
-var gradientSpeed = 0.002;
+const gradientSpeed = 0.002;
+
+let step = 0;
 
 function updateGradient()
 {
-  if ($ === undefined) return;
+  let c0_0 = colors[colorIndices[0]];
+  let c0_1 = colors[colorIndices[1]];
+  let c1_0 = colors[colorIndices[2]];
+  let c1_1 = colors[colorIndices[3]];
 
-  var c0_0 = colors[colorIndices[0]];
-  var c0_1 = colors[colorIndices[1]];
-  var c1_0 = colors[colorIndices[2]];
-  var c1_1 = colors[colorIndices[3]];
+  let istep = 1 - step;
+  let r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
+  let g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
+  let b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
+  let color1 = `rgba(${r1},${g1},${b1},${alpha})`;
 
-  var istep = 1 - step;
-  var r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
-  var g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
-  var b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
-  var color1 = "rgb(" + r1 + "," + g1 + "," + b1 + ")";
+  let r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
+  let g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
+  let b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
+  let color2 = `rgba(${r2},${g2},${b2},${alpha})`;
 
-  var r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
-  var g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
-  var b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
-  var color2 = "rgb(" + r2 + "," + g2 + "," + b2 + ")";
-
-  $('#background').css({
-    background: "-webkit-gradient(linear, left top, right top, from(" + color1 + "), to(" + color2 + "))" }).css({
-    background: "-moz-linear-gradient(left, " + color1 + " 0%, " + color2 + " 100%)" });
+  $('#background').css({background: `linear-gradient(90deg,${color1},${color2})`});
 
   step += gradientSpeed;
   if (step >= 1) {
@@ -70,4 +74,19 @@ function updateGradient()
   }
 }
 
-setInterval(updateGradient, 16);
+setInterval(updateGradient, refresh);
+
+/**
+ * passage en plein écran avec la touche Entrée
+ */
+document.addEventListener("keydown", (e) => {
+  if (e.keyCode == 13) {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen(); 
+      }
+    }
+  }
+}, false);

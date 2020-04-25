@@ -28,9 +28,9 @@ var colors = new Array(
 ## Paramétrage des blobs
 
 Choix des couleurs en modifiant `css/app.scss`
-
 ```
 // couleurs des blobs
+// fetestival 2020
 $colors: (
   #020714,
   #fba361,
@@ -48,9 +48,9 @@ npm run scss-build
 
 ## Export en vidéo
 
-L'animation prenant pas mal de temps CPU, on peut la précalculer en fichier video statique via :
+L'animation prenant pas mal de temps CPU, on peut la précalculer en fichier video statique sans perte de qualité visible via :
 
 ```
-ffmpeg -re -y -f avfoundation -i "1:" -r 60 -s 1280x720 dynamic-background.mkv
+ffmpeg -video_size 1920x1080 -framerate 60 -f avfoundation -pix_fmt uyvy422 -i "1:" -r 25 -s 1280x720 -c:v libx264 -crf 0 -preset ultrafast dynamic-background.mkv
 ```
 
