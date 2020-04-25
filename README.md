@@ -1,0 +1,56 @@
+# Fond d'écran dynamique
+
+Voici un projet de fond d'écran dynamique paramétrable, utilisable pour vos sites web ou pour faire un joli habillage pour vos streams.
+
+## Installation
+
+Juste une dépendance pour la conversion sass -> css
+
+```
+npm install
+```
+
+## Paramétrage du gradient dynamique
+
+Choix des couleurs en modifiant `js/app.js`
+
+```
+var colors = new Array(
+  [240, 223, 92],
+  [247, 153, 95],
+  [243, 133, 57],
+  [159,  80, 25]
+);
+```
+
+(mini 4 couleurs, format RGB, en décimal)
+
+## Paramétrage des blobs
+
+Choix des couleurs en modifiant `css/app.scss`
+
+```
+// couleurs des blobs
+$colors: (
+  #020714,
+  #fba361,
+  #ef7643
+);
+```
+
+Le nombre de blobs dépend du nombre de `<span>` enfants de `<div id="background">`
+
+## Construction
+
+```
+npm run scss-build
+```
+
+## Export en vidéo
+
+L'animation prenant pas mal de temps CPU, on peut la précalculer en fichier video statique via :
+
+```
+ffmpeg -re -y -f avfoundation -i "1:" -r 60 -s 1280x720 dynamic-background.mkv
+```
+

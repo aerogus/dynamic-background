@@ -1,0 +1,44 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; }
+
+#background {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0; }
+
+#background span {
+  /*background-image: url(../img/note.svg);*/
+  width: 20vmin;
+  height: 20vmin;
+  border-radius: 20vmin;
+  backface-visibility: hidden;
+  position: absolute;
+  animation-name: move;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite; }
+  #background span:nth-child(1) {
+    color: #fba361;
+    top: 90%;
+    left: 28%;
+    animation-duration: 18s;
+    animation-delay: -7.7s;
+    transform-origin: -18vw 16vh;
+    box-shadow: -40vmin 0 8.62511vmin currentColor; }
+  #background span:nth-child(2) {
+    color: #020714;
+    top: 96%;
+    left: 84%;
+    animation-duration: 10.4s;
+    animation-delay: -7s;
+    transform-origin: 20vw -15vh;
+    box-shadow: -40vmin 0 6.1284vmin currentColor; }
+
+@keyframes move {
+  100% {
+    transform: translate3d(0, 0, 1px) rotate(360deg); } }
