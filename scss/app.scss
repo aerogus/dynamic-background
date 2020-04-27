@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: url(../img/aquarelle.jpg) repeat; 
+  background: url(../img/afterworks.jpg) center center / cover;
 }
 
 #background {
@@ -19,16 +19,10 @@ $animationDuration: 30s;
 $amount: 20; /* doit être égal au nombre de <span> */
 // couleurs des blobs
 $colors: (
-  #d1eacd,
-  #fbf9cc,
-  #d1eeea,
-  #f6dbcc
-);
-$colors: (
-  #253041,
-  #fffca7,
-  #ffffff,
-  #c8e8c1
+  #000,
+  #fff,
+  #009fbd,
+  #89101c,
 );
 #background span {
   width: $particleSize;
@@ -48,7 +42,7 @@ $colors: (
       animation-duration: (random($animationDuration * 10) / 10) * 1s + 10s;
       animation-delay: random(($animationDuration + 10s) * 10) / 10 * -1s;
       transform-origin: (random(50) - 25) * 1vw (random(50) - 25) * 1vh;
-      $blurRadius: (random() + 0.5) * $particleSize * 0.1;
+      $blurRadius: (random() + 0.5) * $particleSize * 0.3;
       $x: if(random() > 0.5, -1, 1);
       box-shadow: ($particleSize * 2 * $x) 0 $blurRadius currentColor;
     }
