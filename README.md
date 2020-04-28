@@ -52,6 +52,20 @@ L'animation prenant pas mal de temps CPU, on peut la précalculer en fichier vid
 Pour cela on lance l'animation en plein écran avec son navigateur sur l'écran "1" et on exécute la commande :
 
 ```
-ffmpeg -video_size 1920x1080 -framerate 60 -f avfoundation -pix_fmt uyvy422 -i "1:" -r 25 -s 1280x720 -c:v libx264 -crf 0 -preset ultrafast dynamic-background.mkv
+ffmpeg -video_size 1920x1080 -framerate 25 -f avfoundation -pix_fmt uyvy422 -i "1:" -pix_fmt yuv420p -r 25 -s 1280x720 -c:v libx264 -crf 18 dynamic-background.mkv
 ```
+
+On peut générer une version reverse
+
+```
+ffmpeg -i dynamic-background.mkv -vf reverse -crf 18 dynamic-background-reverse.mkv
+```
+
+puis on va les concaténer :
+
+```
+for f in ./*.mkv; do echo "file '$f'" >> concat.txt; done
+ffmpeg -f concat -safe 0 -i concat.txt -c copy dynamic-background-loop.mkv
+rm concat.txt
+``
 
