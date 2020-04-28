@@ -14,7 +14,7 @@ npm install
 
 Choix des couleurs en modifiant `js/app.js`
 
-```
+```js
 var colors = new Array(
   [240, 223, 92],
   [247, 153, 95],
@@ -28,7 +28,7 @@ var colors = new Array(
 ## Paramétrage des blobs
 
 Choix des couleurs en modifiant `css/app.scss`
-```
+```scss
 // couleurs des blobs
 // fetestival 2020
 $colors: (
@@ -43,7 +43,7 @@ Le nombre de blobs dépend du nombre de `<span>` enfants de `<div id="background
 ## Construction
 
 ```
-npm run scss-build
+npm run scss
 ```
 
 ## Export en vidéo
@@ -67,5 +67,4 @@ puis on va les concaténer :
 for f in ./*.mkv; do echo "file '$f'" >> concat.txt; done
 ffmpeg -f concat -safe 0 -i concat.txt -c copy dynamic-background-loop.mkv
 rm concat.txt
-``
-
+```
