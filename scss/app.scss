@@ -1,10 +1,34 @@
+////// DEBUT PARTIE VARIABLE
+
+// image de fond
+$background: url(../img/lespiedsdanslorge.jpg) repeat;
+
+// taille de blobs
+$particleSize: 20vmin;
+
+// durée de l'animation
+$animationDuration: 30s;
+
+// nombre de blogs, doit être égal au nombre de <span>
+$amount: 20;
+
+// couleurs des blobs
+$colors: (
+  hsl(112, 100%, 66.1%),
+  hsl(57, 100%, 59.2%),
+  hsl(172, 100%, 57.6%),
+  hsl(21, 100%, 58.2%)
+);
+
+////// FIN PARTIE VARIABLE
+
 body {
   width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: url(../img/afterworks.jpg) center center / cover;
+  background: $background;
 }
 
 #background {
@@ -14,16 +38,6 @@ body {
   margin: 0;
 }
 
-$particleSize: 10vmin;
-$animationDuration: 30s;
-$amount: 20; /* doit être égal au nombre de <span> */
-// couleurs des blobs
-$colors: (
-  #000,
-  #fff,
-  #009fbd,
-  #89101c,
-);
 #background span {
   width: $particleSize;
   height: $particleSize;

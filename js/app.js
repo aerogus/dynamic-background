@@ -2,20 +2,32 @@
  * Background dynamique
  */
 
+////// DEBUT PARTIE VARIABLE
+
 // 4 couleurs, codé en RGV décimal
 const colors = new Array(
+  [0, 0, 0],
   [255, 255, 255],
-  [ 53,  6,   11],
-  [  0,  0,    0],
-  [ 0,  62,   75]
+  [0, 0, 0],
+  [255, 255, 255]
 );
 
-const alpha = .5;
+// activation du gradient
+const gradientEnable = false;
+
+// gradient Alpha
+const gradientAlpha = .2;
+
+// transition speed
+const gradientSpeed = 0.002;
 
 // nombre d'images par seconde voulu
 const frameRate = 60;
+
 // intervalle entre chaque calcul
 const refresh = 1000 / frameRate;
+
+////// FIN PARTIE VARIABLE
 
 // color table indices for: 
 const colorIndices = [
@@ -24,9 +36,6 @@ const colorIndices = [
   2, // current color right
   3  // next color right
 ];
-
-// transition speed
-const gradientSpeed = 0.002;
 
 let step = 0;
 
@@ -41,12 +50,12 @@ function updateGradient()
   let r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
   let g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
   let b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
-  let color1 = `rgba(${r1},${g1},${b1},${alpha})`;
+  let color1 = `rgba(${r1},${g1},${b1},${gradientAlpha})`;
 
   let r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
   let g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
   let b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
-  let color2 = `rgba(${r2},${g2},${b2},${alpha})`;
+  let color2 = `rgba(${r2},${g2},${b2},${gradientAlpha})`;
 
   $('#background').css({background: `linear-gradient(90deg,${color1},${color2})`});
 
@@ -63,7 +72,9 @@ function updateGradient()
   }
 }
 
-setInterval(updateGradient, refresh);
+if (gradientEnable) {
+  setInterval(updateGradient, refresh);
+}
 
 /**
  * passage en plein écran avec la touche Entrée
