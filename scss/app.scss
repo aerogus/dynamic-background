@@ -3,17 +3,27 @@
 // image de fond
 $background: url(../img/lespiedsdanslorge.jpg) repeat;
 
-// taille de blobs
-$particleSize: 20vmin;
+// durée de l'animation du background
+$backgroundAnimationDuration: 50s;
 
-// durée de l'animation
-$animationDuration: 30s;
+// taille des blobs
+$blobSize: 180px;
 
-// nombre de blogs, doit être égal au nombre de <span>
-$amount: 20;
+// flouté des blobs
+$blobBlur: .125;
+
+/// opacité des blobs
+$blobAlphaMin: .25;
+$blobAlphaMax: .5;
+
+// durée de l'animation blobs
+$blobAnimationDuration: 300s;
+
+// nombre de blobs, doit être égal au nombre de <span>
+$blobAmount: 30;
 
 // couleurs des blobs
-$colors: (
+$blobColors: (
   hsl(112, 100%, 66.1%),
   hsl(57, 100%, 59.2%),
   hsl(172, 100%, 57.6%),
@@ -29,6 +39,7 @@ body {
   padding: 0;
   overflow: hidden;
   background: $background;
+  animation: bgmove $backgroundAnimationDuration linear infinite;
 }
 
 #background {
@@ -39,40 +50,45 @@ body {
 }
 
 #background span {
-  width: $particleSize;
-  height: $particleSize;
-  border-radius: $particleSize;
+  width: $blobSize;
+  height: $blobSize;
+  border-radius: 100%;//$blobSize;
   backface-visibility: hidden;
   position: absolute;
   animation-name: move;
-  animation-duration: $animationDuration;
+  animation-duration: $blobAnimationDuration;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  @for $i from 1 through $amount {
+  @for $i from 1 through $blobAmount {
     &:nth-child(#{$i}) {
-      color: nth($colors, random(length($colors)));
+      color: nth($blobColors, random(length($blobColors)));
       top: random(100) * 1%;
       left: random(100) * 1%;
-      animation-duration: (random($animationDuration * 10) / 10) * 1s + 10s;
-      animation-delay: random(($animationDuration + 10s) * 10) / 10 * -1s;
+      animation-duration: (random($blobAnimationDuration * 10) / 10) * 1s + 10s;
+      animation-delay: random(($blobAnimationDuration + 10s) * 10) / 10 * -1s;
       transform-origin: (random(50) - 25) * 1vw (random(50) - 25) * 1vh;
-      $blurRadius: (random() + 0.5) * $particleSize * 0.3;
+      $blurRadius: (random() + 0.5) * $blobSize * $blobBlur;
       $x: if(random() > 0.5, -1, 1);
-      box-shadow: ($particleSize * 2 * $x) 0 $blurRadius currentColor;
+      box-shadow: ($blobSize * 2 * $x) 0 $blurRadius currentColor;;
     }
   }
 }
 
 @keyframes move {
   0% {
-    opacity: 1;
+    opacity: $blobAlphaMax;
   }
   50% {
-    opacity: .75;
+    opacity: $blobAlphaMin;
   }
   100% {
-    opacity: 1;
+    opacity: $blobAlphaMax;
     transform: translate3d(0, 0, 1px) rotate(360deg);
   }
 }
 
+@keyframes bgmove {
+  100%{
+   background-position: -512px 0;
+ }
+}
